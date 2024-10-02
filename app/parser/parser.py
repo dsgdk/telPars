@@ -4,8 +4,8 @@ from telethon import TelegramClient, sync, events
 load_dotenv()
 
 # -- Config
-api_id   = os.getenv('API_ID')          # -- Api id
-api_hash = os.getenv('API_HASH')        # -- Api hash
+api_id   = os.getenv('API_ID')   # -- Api id
+api_hash = os.getenv('API_HASH') # -- Api hash
 client   = TelegramClient('parser', api_id, api_hash)
 
 # -- Channels that we will monitor
