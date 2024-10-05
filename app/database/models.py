@@ -1,7 +1,11 @@
-from sqlalchemy import Column, Integer, String
+import os
 from sqlalchemy.ext.declarative import declarative_base
+from dotenv                     import load_dotenv
+from sqlalchemy                 import Column, Integer, String, create_engine
+from sqlalchemy.orm             import sessionmaker
 
 Base = declarative_base()
+load_dotenv()
 
 class TelegramMessage(Base):
     __tablename__ = 'telegram_messages'
@@ -18,3 +22,23 @@ class TelegramMessage(Base):
     def __repr__(self):
         return f"<TelegramMessage(id={self.id}, message_text='{self.message_text}', message_date='{self.message_date}', sender_id={self.sender_id}, first_name='{self.first_name}', last_name='{self.last_name}', username='{self.username}', phone_number='{self.phone_number}')>"
 
+# -- Creating an engine for PostgreSQL
+def get_engine():
+    user     = os.getenv('DB_USER')
+    password = os.getenv('DB_PASSWORD')
+    host     = os.getenv('DB_HOST')
+    port     = os.getenv('DB_PORT')
+    dbname   = os.getenv('DB_NAME')
+
+    if None in [user, password, host, port, dbname]:
+        raise ValueError(f"One or more environment variables are missing: user={user}, password={password}, host={host}, port={port}, dbname={dbname}")
+
+    connection_string = f'postgresql://{user}:{password}@{host}:{port}/{dbname}'
+    return create_engine(connection_string)
+
+def create_tables(engine):
+    Base.metadata.create_all(engine)
+
+def get_session(engine):
+    Session = sessionmaker(bind=engine)
+    return Session()

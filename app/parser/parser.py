@@ -25,9 +25,9 @@ async def handler(event):
     sender       = await event.get_sender()
 
     first_name   = sender.first_name or ''  # -- First name
-    last_name    = sender.last_name or ''   # -- Last name
-    username     = sender.username or ''    # -- Username
-    phone_number = sender.phone or ''       # -- Phone number
+    last_name    = sender.last_name  or ''  # -- Last name
+    username     = sender.username   or ''  # -- Username
+    phone_number = sender.phone      or ''  # -- Phone number
 
     if debug == 1:                          # -- Debug
         print(f"Text:               {message_text}")
