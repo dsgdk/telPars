@@ -1,7 +1,7 @@
 from models import TelegramMessage, get_engine, get_session
 
 def delete_last_message():
-    # Отримуємо engine та сесію
+    
     engine = get_engine()
     session = get_session(engine)
     
@@ -12,9 +12,9 @@ def delete_last_message():
     if last_message:
         session.delete(last_message)
         session.commit()
-        print(f"Запис з id={last_message.id} успішно видалено")
+        print(f"Record with id={last_message.id} deleted successfully")
     else:
-        print("Немає записів для видалення")
+        print("There are no entries to delete")
 
     # Закриваємо сесію
     session.close()
