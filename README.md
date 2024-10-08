@@ -4,11 +4,12 @@ This application is intended for parsing the specified Telegram channels. Teleth
 
 # Project Structure
 
+```
 telPars/
 ├── app/
 │   ├── alembic/
 │   │   ├── versions/
-|   |   |   └── ...
+│   │   │   └── ...
 │   │   ├── env.py
 │   │   └── README
 │   ├── database/
@@ -21,7 +22,8 @@ telPars/
 │   ├── parser.py
 │   └── tg_dot.py
 ├── docker/
-|   └── ...
+│   └── ...
 ├── docker-compose.yml
 ├── LICENCE
 └── requirements.txt
+```
