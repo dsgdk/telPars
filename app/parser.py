@@ -1,48 +1,39 @@
 import os
-from dotenv   import load_dotenv
-from telethon import TelegramClient, sync, events
-
+from dotenv import load_dotenv
+from telethon import TelegramClient, events
 from database.add import add_new_telegram_message
+from database.get import get_last_message_id_from_db
 
 load_dotenv()
 
 # -- Config
-api_id   = os.getenv('API_ID')   # -- Api id
-api_hash = os.getenv('API_HASH') # -- Api hash
-client   = TelegramClient('parser', api_id, api_hash)
+api_id = os.getenv('API_ID')
+api_hash = os.getenv('API_HASH')
+client = TelegramClient('parser', api_id, api_hash)
 
 # -- Channels that we will monitor
-channels      = os.getenv('TELEGRAM_CHATS')
-channels_list = channels.split(",")
-
-# -- Debug
-debug = 0 # -- if 1: on, else: off
+channels = os.getenv('TELEGRAM_CHATS')
+channels_list = [channel.strip() for channel in channels.split(",")]
 
 @client.on(events.NewMessage(chats=channels_list))
-async def handler(event):
-    
-    if debug == 0:
-        sender = await event.get_sender()
+async def new_message_handler(event):
+    message = event.message
+    sender = await message.get_sender()
+
+    if sender:
         add_new_telegram_message(
-            message_text    =event.message.message,
-            message_date    =event.message.date,
-            sender_id       =event.sender_id,
-            first_name      =sender.first_name or '',
-            last_name       =sender.last_name  or '',
-            username        =sender.username   or '',
-            phone_number    =sender.phone      or ''
+            message_text=message.text or '',
+            message_date=message.date or '',
+            sender_id=sender.id,
+            first_name=sender.first_name or '',
+            last_name=sender.last_name or '',
+            username=sender.username or '',
+            phone_number=sender.phone or '',
+            message_id=message.id
         )
+    get_last_message_id_from_db()
 
-    if debug == 1: # -- Debug
-        sender       = await event.get_sender()
-        print(f"Text:          {event.message.message  }"  ) # -- Message
-        print(f"Date and time: {event.message.date     }"  ) # -- Date
-        print(f"Sender id:     {event.sender_id        }"  ) # -- Sender id
-        print(f"First name:    {sender.first_name or ''}"  ) # -- First name
-        print(f"Last name:     {sender.last_name  or ''}"  ) # -- Last name
-        print(f"Username:      {sender.username   or ''}"  ) # -- Username
-        print(f"Phone number:  {sender.phone      or ''}"  ) # -- Phone number
-        print("-" * 65)
-
-client.start()
-client.run_until_disconnected()
+if __name__ == "__main__":
+    client.start()
+    print("Listening for new messages...")
+    client.run_until_disconnected()

@@ -23,3 +23,6 @@ secrets.yaml
 
 .DS_Store
 Thumbs.db
+
+alembic/
+*.ini

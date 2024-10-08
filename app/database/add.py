@@ -2,7 +2,7 @@ from sqlalchemy.orm import sessionmaker
 from .models import TelegramMessage, get_engine
 
 # -- Функція для додавання нового повідомлення в базу даних
-def add_new_telegram_message(message_text, message_date, sender_id, first_name, last_name, username, phone_number):
+def add_new_telegram_message(message_text, message_date, sender_id, first_name, last_name, username, phone_number, message_id):
     # -- Створюємо сесію
     engine  = get_engine()
     Session = sessionmaker(bind=engine)
@@ -17,7 +17,8 @@ def add_new_telegram_message(message_text, message_date, sender_id, first_name, 
             first_name      =first_name,
             last_name       =last_name,
             username        =username,
-            phone_number    =phone_number
+            phone_number    =phone_number,
+            message_id      =message_id
         )
 
         session.add(new_message)
