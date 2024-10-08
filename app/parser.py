@@ -19,8 +19,11 @@ channels_list = [channel.strip() for channel in channels.split(",")]
 async def new_message_handler(event):
     message = event.message
     sender = await message.get_sender()
+    last_id = get_last_message_id_from_db()
+    print("last id:", last_id)
 
     if sender:
+        print("message id: ", message.id)
         add_new_telegram_message(
             message_text=message.text or '',
             message_date=message.date or '',
@@ -31,7 +34,6 @@ async def new_message_handler(event):
             phone_number=sender.phone or '',
             message_id=message.id
         )
-    get_last_message_id_from_db()
 
 if __name__ == "__main__":
     client.start()

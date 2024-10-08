@@ -23,7 +23,30 @@ telPars/
 │   └── tg_dot.py
 ├── docker/
 │   └── ...
+├── .env
 ├── docker-compose.yml
 ├── LICENCE
 └── requirements.txt
+```
+
+## .env example
+
+```
+# -- Telethon
+API_ID=id
+API_HASH=hash
+
+# -- Telegram
+BT_TOKEN=token
+
+
+# -- Chats
+TELEGRAM_CHATS=chat_1,chat_2,chat_3
+
+# -- PostgreSQL
+DB_USER=username
+DB_PASSWORD=password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=database_name
 ```

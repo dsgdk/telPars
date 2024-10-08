@@ -1,7 +1,7 @@
 import os
 from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
-from sqlalchemy import Column, Integer, BigInteger, String, Numeric, create_engine
+from sqlalchemy import Column, Integer, String, Numeric, create_engine
 from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
