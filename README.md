@@ -50,3 +50,21 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=database_name
 ```
+
+## Парсинг в фоновому режимі 
+Фоновий парсинг можна оформити за допомогою crontab. 
+
+### 1. Перед тим, як додати код в автозапуск потрібно запустити його вручну ось так:
+```
+python3 /home/path/to/your/parser.py
+```
+### 2. Далі, відкрити crontab файл:
+```
+crontab -e
+```
+### 3. В кінці файлу додати це:
+```
+*/30 * * * * /usr/bin/python3 /home/path/to/your/parser.py >> /path/to/logfile.log 2>&1
+```
+
+Парсинг буде відбуватися кожні 30 хвилин.
