@@ -51,20 +51,18 @@ DB_PORT=5432
 DB_NAME=database_name
 ```
 
-## Парсинг в фоновому режимі 
-Фоновий парсинг можна оформити за допомогою crontab. 
-
-### 1. Перед тим, як додати код в автозапуск потрібно запустити його вручну ось так:
+## Background Parsing Using Crontab 
+### 1. First, you need to manually run the script to create the session file for Telegram authentication:
 ```
 python3 /home/path/to/your/parser.py
 ```
-### 2. Далі, відкрити crontab файл:
+### 2. Next, open the crontab file:
 ```
 crontab -e
 ```
-### 3. В кінці файлу додати це:
+### 3. At the end of the file, add the following line to run the parser every 30 minutes and save logs:
 ```
 */30 * * * * /usr/bin/python3 /home/path/to/your/parser.py >> /path/to/logfile.log 2>&1
 ```
 
-Парсинг буде відбуватися кожні 30 хвилин.
+This command will run the parser every 30 minutes. The results (both output and errors) will be saved in the log file at /path/to/logfile.log. The 2>&1 part ensures that both standard output and errors are redirected to the same log file.
