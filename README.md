@@ -21,7 +21,7 @@ telPars/
 └── requirements.txt
 ```
 
-## Використання
+## Using
 
 1. Clone the repository: 
 ```
