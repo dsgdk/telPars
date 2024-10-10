@@ -23,25 +23,29 @@ telPars/
 
 ## Використання
 
-1. Клонуйте репозиторій 
+1. Clone the repository: 
 ```
 git clone https://github.com/dsgdk/telPars.git
 ```
-2. Відкрийте папку з проєктом
+2. Open the project folder and install the required Python packages:
+
 ```
 cd telPars
 ```
-3. Створіть .env файл і заповніть його (приклад нижче)
+```
+pip install -r requirements.txt
+```
+3. Create an .env file and fill it (example below)
 ```
 nano .env
 ```
-4. Запустіть parser.py, або додайте його в Crontab файл (інструкція нижче)
+4. Run parser.py, or add it to the crontab file (example below)
 ```
-python3 parser.py
+python3 app/parser.py
 ```
-5. Запустіть tg_bot.py
+5. Run tg_bot.py
 ```
-python3 tg_bot.py
+python3 app/tg_bot.py
 ```
 
 ## .env example
@@ -67,17 +71,22 @@ DB_NAME=database_name
 ```
 
 ## Background Parsing Using Crontab 
-### 1. First, you need to manually run the script to create the session file for Telegram authentication:
+
+1. First, you need to manually run the script to create the session file for Telegram authentication:
 ```
 python3 /home/path/to/your/parser.py
 ```
-### 2. Next, open the crontab file:
+2. Next, open the crontab file:
 ```
 crontab -e
 ```
-### 3. At the end of the file, add the following line to run the parser every 30 minutes and save logs:
+3. At the end of the file, add the following line to run the parser every 30 minutes and save logs:
 ```
 */30 * * * * /usr/bin/python3 /home/path/to/your/parser.py >> /path/to/logfile.log 2>&1
 ```
 
 This command will run the parser every 30 minutes. The results (both output and errors) will be saved in the log file at /path/to/logfile.log. The 2>&1 part ensures that both standard output and errors are redirected to the same log file.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
