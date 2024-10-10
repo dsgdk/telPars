@@ -1,2 +1,6 @@
-python-dotenv
-telethon
+pyTelegramBotAPI==4.23.0
+python-dotenv==1.0.1
+SQLAlchemy==2.0.35
+Telethon==1.36.0
+psycopg2-binary
+

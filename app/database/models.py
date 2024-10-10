@@ -10,7 +10,7 @@ load_dotenv()
 class TelegramMessage(Base):
     __tablename__ = 'telegram_messages'
     
-    id           = Column(Integer, nullable=False, primary_key=True )
+    id           = Column(Integer, nullable=False, primary_key=True)
     message_text = Column(String,  nullable=False)
     message_date = Column(String,  nullable=False)
     sender_id    = Column(Numeric, nullable=False)

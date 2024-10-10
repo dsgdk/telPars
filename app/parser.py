@@ -1,28 +1,29 @@
 import os
-from dotenv import load_dotenv
-from telethon import TelegramClient, events
+import asyncio
+
+from dotenv       import load_dotenv
+from telethon     import TelegramClient
 from database.add import add_new_telegram_message
 from database.get import get_last_message_id_from_db
 
 load_dotenv()
 
 # -- Config
-api_id   = os.getenv('API_ID')
+api_id = os.getenv('API_ID')
 api_hash = os.getenv('API_HASH')
-client   = TelegramClient('parser', api_id, api_hash)
+client = TelegramClient('parser', api_id, api_hash)
 
 # -- Channels that we will monitor
-channels      = os.getenv('TELEGRAM_CHATS')
+channels = os.getenv('TELEGRAM_CHATS')
 channels_list = [channel.strip() for channel in channels.split(",")]
 
-async def fetch_and_store_new_messages(channel):
-    """Отримання та збереження нових повідомлень з каналу."""
-    last_saved_id = get_last_message_id_from_db()                # -- Отримуємо останній збережений ID з БД
+async def check_new_messages(channel):
+    last_saved_id = get_last_message_id_from_db()  # -- Отримуємо останній збережений ID з БД
     new_messages = []                                            # -- Список для збереження нових повідомлень
     async for message in client.iter_messages(channel):          # -- Отримання всіх повідомлень з каналу
         if last_saved_id is None or message.id > last_saved_id:  # -- Перевірка на None та ID повідомлення
             sender = await message.get_sender()
-            if sender:                                      
+            if sender:
                 new_messages.append({                       # -- Додаємо нове повідомлення до списку
                     'message_text': message.text or '',     # -- Текст
                     'message_date': message.date or '',     # -- Дата
@@ -36,7 +37,10 @@ async def fetch_and_store_new_messages(channel):
     for msg in sorted(new_messages, key=lambda m: m['message_id']):
         add_new_telegram_message(**msg)
 
-if __name__ == "__main__":
-    client.start()
+async def main():
+    await client.start()
     for channel in channels_list:
-        client.loop.run_until_complete(fetch_and_store_new_messages(channel))
+        await check_new_messages(channel)
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -7,26 +7,41 @@ This application is intended for parsing the specified Telegram channels. Teleth
 ```
 telPars/
 ├── app/
-│   ├── alembic/
-│   │   ├── versions/
-│   │   │   └── ...
-│   │   ├── env.py
-│   │   └── README
 │   ├── database/
 │   │   ├── add.py
 │   │   ├── del.py
 │   │   ├── get.py
 │   │   ├── models.py
-│   │   ├── print.py
-│   │   └── README
+│   │   └── print.py
 │   ├── parser.py
-│   └── tg_dot.py
-├── docker/
-│   └── ...
+│   └── tg_bot.py
 ├── .env
-├── docker-compose.yml
 ├── LICENCE
+├── README
 └── requirements.txt
+```
+
+## Використання
+
+1. Клонуйте репозиторій 
+```
+git clone https://github.com/dsgdk/telPars.git
+```
+2. Відкрийте папку з проєктом
+```
+cd telPars
+```
+3. Створіть .env файл і заповніть його (приклад нижче)
+```
+nano .env
+```
+4. Запустіть parser.py, або додайте його в Crontab файл (інструкція нижче)
+```
+python3 parser.py
+```
+5. Запустіть tg_bot.py
+```
+python3 tg_bot.py
 ```
 
 ## .env example
